@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - FLASK_ENV=development
+    volumes:
+      - .:/app
+    ports:
+      - "5000:5000"
+    entrypoint: ["uwsgi", "--ini", "/app/wsgi.ini"]
+    networks:
+      - webnet
+  redis:
+    image: redis
+    ports:
+      - "8379:6379"
+    volumes:
+      - ./data-redis:/data
+    networks:
+      - webnet
+networks:
+  webnet:
