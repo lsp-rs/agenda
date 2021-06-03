@@ -1,0 +1,17 @@
+.background-left {
+    background-image: url("../images/background_temp.jpg");
+    background-size: cover;
+    background-position: left;
+}
+
+.bg-text {
+    background-color: rgba(37, 37, 37, 0.65);
+    border-radius: 20px;
+}
+
+.login-body {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    flex-direction: column-reverse;
+}
