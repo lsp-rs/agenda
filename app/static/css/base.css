@@ -15,3 +15,22 @@
     justify-content: flex-end;
     flex-direction: column-reverse;
 }
+
+.btn-square {
+    width: 43%;
+    max-width: 110px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-square img {
+    width: 50%;
+    margin-bottom: 0.8rem;
+}
+
+.btn-square span {
+    font-size: 1.2rem;
+}

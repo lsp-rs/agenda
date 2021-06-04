@@ -12,16 +12,19 @@ blueprint_default = Blueprint("views", __name__)
 @blueprint_default.route("/", methods=("GET", "POST"))
 def index():
     context = {
-        "example": "teste value."
+        "logged": False
     }
     return render_template("index.html", context=context)
 
 
 @blueprint_default.route("/cadastro", methods=("GET", "POST"))
 def account_create():
+    context = {
+        "logged": False
+    }
     if request.method == "POST":
         return redirect(url_for("views.home"))
-    return render_template("account-create.html")
+    return render_template("account-create.html", context=context)
 
 
 @blueprint_default.route("/login", methods=("POST",))
@@ -35,6 +38,6 @@ def login():
 @blueprint_default.route("/home", methods=("GET", "POST"))
 def home():
     context = {
-        "example": "teste value."
+        "logged": True
     }
     return render_template("home.html", context=context)
