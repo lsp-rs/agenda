@@ -10,16 +10,19 @@
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a href="{{ url_for('views.home') }}" class="nav-link active" aria-current="page">Inicio</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Agendamento</a>
+          <a href="{{ url_for('views.scheduling') }}" class="nav-link">Agendamento</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Calendario</a>
+          <a href="{{ url_for('views.calendar') }}" class="nav-link">Calendario</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Perfil</a>
+          <a href="{{ url_for('views.home') }}" class="nav-link disabled" tabindex="-1" aria-disabled="true">Perfil</a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ url_for('views.logout') }}" class="nav-link" href="#" tabindex="-1" aria-disabled="true">Sair</a>
         </li>
       </ul>
     </div>

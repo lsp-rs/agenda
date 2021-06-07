@@ -35,6 +35,14 @@ def login():
         return redirect(url_for("views.index"))
 
 
+@blueprint_default.route("/logout", methods=("GET",))
+def logout():
+    context = {
+        "logged": False
+    }
+    return redirect(url_for("views.index", context=context))
+
+
 @blueprint_default.route("/inicio", methods=("GET", "POST"))
 def home():
     context = {
@@ -44,8 +52,69 @@ def home():
 
 
 @blueprint_default.route("/agendar", methods=("GET", "POST"))
+def scheduling():
+    context = {
+        "logged": True
+    }
+    if request.method == "POST":
+        return redirect(url_for("views.schedule"))
+    return render_template("scheduling.html", context=context)
+
+
+
+@blueprint_default.route("/reagendar", methods=("GET", "POST"))
+def reschedule():
+    context = {
+        "logged": True
+    }
+    if request.method == "POST":
+        return redirect(url_for("views.schedule"))
+    return render_template("reschedule.html", context=context)
+
+
+@blueprint_default.route("/horario", methods=("GET", "POST"))
 def schedule():
     context = {
         "logged": True
     }
-    return render_template("scheduling.html", context=context)
+    return render_template("schedule.html", context=context)
+
+
+@blueprint_default.route("/calendario", methods=("GET", "POST"))
+def calendar():
+    context = {
+        "logged": True
+    }
+    return render_template("calendar.html", context=context)
+
+
+@blueprint_default.route("/historico", methods=("GET", "POST"))
+def history():
+    context = {
+        "logged": True
+    }
+    return render_template("history.html", context=context)
+
+
+@blueprint_default.route("/visualizar", methods=("GET",))
+def view_schedule():
+    context = {
+        "logged": True
+    }
+    return render_template("view-schedule.html", context=context)
+
+
+@blueprint_default.route("/confirmar", methods=("GET",))
+def check_schedule():
+    context = {
+        "logged": True
+    }
+    return render_template("check-schedule.html", context=context)
+
+
+@blueprint_default.route("/cancelar", methods=("GET",))
+def cancel_schedule():
+    context = {
+        "logged": True
+    }
+    return render_template("cancel-schedule.html", context=context)

@@ -1,6 +1,6 @@
 <div class="row justify-content-center py-md-4">
   <div class="col-10 col-sm-6 col-lg-5 col-xl-4 col-xxl-3 py-md-4">
-    <form class="form" method="POST" action="{{ url_for('views.scheduling') }}">
+    <form class="form" method="POST" action="{{ url_for('views.reschedule') }}">
       <div class="row form-group input-group-lg">
         <label for="email" class="px-0">
           Hora de Agendamento
@@ -41,13 +41,13 @@
         </div>
       </div>
 
-      <div class="d-flex pt-3">
+      <div class="d-grid gap-2 pt-3">
         <a href="javascript:javascript:history.go(-1)" class="btn btn-warning btn-lg mx-2">
           <span class="text-dark">Voltar</span>
           <img src="{{ url_for('static', filename='images/icons/back-arrow.svg') }}" class="icon-row"></i>
         </a>
         <button type="submit" class="btn btn-primary btn-lg mx-2">
-          Agendar
+          Reagendar
         </button>
       </div>
     </form>

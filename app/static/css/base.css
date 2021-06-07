@@ -39,6 +39,6 @@ nav.navbar img { width: 82px; }
   margin-bottom: 0.8rem;
 }
 
-.btn-square span {
-  font-size: 1.2rem;
-}
+.btn-square span { font-size: 1.2rem; }
+
+img.icon-row { height: 1rem; }
