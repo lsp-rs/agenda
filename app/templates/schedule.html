@@ -8,23 +8,29 @@
     <div class="d-flex flex-row flex-wrap justify-content-center">
       <button class="btn btn-square bg-primary m-2">
         <img src="{{ url_for('static', filename='images/icons/clock.svg') }}" class="icon"></i>
-        <span>Agendar</span>
+        <span>Visualizar</span>
       </button>
 
       <button class="btn btn-square bg-primary m-2">
         <img src="{{ url_for('static', filename='images/icons/arrival-time.svg') }}" class="icon"></i>
-        <span>Horário</span>
+        <span>Cancelar</span>
       </button>
 
       <button class="btn btn-square bg-primary m-2">
         <img src="{{ url_for('static', filename='images/icons/calendar.svg') }}" class="icon"></i>
-        <span>Calendário</span>
+        <span>Confirmar</span>
       </button>
 
       <button class="btn btn-square bg-primary m-2">
         <img src="{{ url_for('static', filename='images/icons/history.svg') }}" class="icon"></i>
         <span>Histórico</span>
       </button>
+
+      <div class="d-grid gap-2 pt-3">
+        <button type="submit" class="btn btn-primary btn-sm my-2 mx-3">
+          Agendar
+        </button>
+      </div>
     </div>
   </div>
 </div>

@@ -1,0 +1,49 @@
+<div class="row justify-content-center py-md-4">
+  <div class="col-9 col-md-8 col-lg-6 py-md-4">
+    <form class="form" method="POST" action="{{ url_for('views.schedule') }}">
+      <div class="row form-group">
+        <label for="email">
+          Hora de Agendamento
+        </label>
+
+        <div class="col-3">
+          <input type="text" name="hour" id="hour" class="form-control" placeholder="18">
+        </div>
+        <div class="col-3">
+          <input type="text" name="minute" id="minute" class="form-control" placeholder="30">
+        </div>
+      </div>
+
+      <div class="row form-group pt-3">
+        <label for="day">
+          Data de Agendamento
+        </label>
+
+        <div class="col-3">
+          <input type="text" name="day" id="day" class="form-control" placeholder="20">
+        </div>
+
+        <div class="col-3">
+          <input type="text" name="month" id="month" class="form-control" placeholder="12">
+        </div>
+
+        <div class="col-6">
+          <input type="text" name="year" id="year" class="form-control" placeholder="2021">
+        </div>
+      </div>
+
+      <div class="form-group pt-3">
+        <label for="note">
+          Observações
+        </label>
+        <textarea name="note" id="note" class="form-control"></textarea>
+      </div>
+
+      <div class="d-grid gap-2 pt-3">
+        <button type="submit" class="btn btn-primary btn-sm my-2 mx-3">
+          Agendar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

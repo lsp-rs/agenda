@@ -20,4 +20,3 @@ def create_app(config_name, **kwargs):
         app.register_blueprint(static_admin, url_prefix='/agenda')
 
         return app
-

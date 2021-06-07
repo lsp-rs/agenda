@@ -1,36 +1,44 @@
 .background-left {
-    background-image: url("../images/background_temp.jpg");
-    background-size: cover;
-    background-position: left;
+  background-image: url("../images/background_temp.jpg");
+  background-size: cover;
+  background-position: left;
 }
 
 .bg-text {
-    background-color: rgba(37, 37, 37, 0.65);
-    border-radius: 20px;
+  background-color: rgba(37, 37, 37, 0.65);
+  border-radius: 20px;
 }
 
 .login-body {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: flex-end;
-    flex-direction: column-reverse;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  flex-direction: column-reverse;
+}
+
+nav.navbar img { width: 82px; }
+
+.banner-head {
+  background-image: url("../images/background_temp.jpg");
+  background-size: cover;
+  height: 186px;
 }
 
 .btn-square {
-    width: 43%;
-    max-width: 110px;
-    padding: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
+  width: 43%;
+  max-width: 110px;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .btn-square img {
-    width: 50%;
-    margin-bottom: 0.8rem;
+  width: 50%;
+  margin-bottom: 0.8rem;
 }
 
 .btn-square span {
-    font-size: 1.2rem;
+  font-size: 1.2rem;
 }

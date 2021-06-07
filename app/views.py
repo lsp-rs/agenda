@@ -35,9 +35,17 @@ def login():
         return redirect(url_for("views.index"))
 
 
-@blueprint_default.route("/home", methods=("GET", "POST"))
+@blueprint_default.route("/inicio", methods=("GET", "POST"))
 def home():
     context = {
         "logged": True
     }
     return render_template("home.html", context=context)
+
+
+@blueprint_default.route("/agendar", methods=("GET", "POST"))
+def schedule():
+    context = {
+        "logged": True
+    }
+    return render_template("scheduling.html", context=context)

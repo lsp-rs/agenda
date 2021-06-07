@@ -5,7 +5,7 @@ function validate_cpf(element_cpf) {
     if (regex.test(cpf)) {
         success_class(element_cpf);
         return true;
-    }else{
+    } else {
         fail_class(element_cpf);
         return false;
     }
@@ -17,20 +17,20 @@ function validate_check(element_checkbox) {
     if (check) {
         success_class(element_checkbox);
         return true;
-    }else{
+    } else {
         fail_class(element_checkbox);
         return false;
     }
 }
 
 
-function success_class(element){
+function success_class(element) {
     element.classList.remove('is-invalid');
     element.classList.add('is-valid');
 }
 
 
-function fail_class(element){
+function fail_class(element) {
     element.classList.remove('is-valid');
     element.classList.add('is-invalid');
 }

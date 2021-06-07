@@ -1,26 +1,29 @@
 @media screen and (min-width: 425px) {
 }
-  
-  
+
+
 @media screen and (min-width: 540px) {
 }
-  
-  
-@media screen and (min-width: 768px) {
-    .h-md-100 {
-        height: 100%!important;
-    }
 
-    .login-body { flex-direction: row; }
+
+@media screen and (min-width: 768px) {
+  .h-md-100 { height: 100%!important; }
+
+  .login-body { flex-direction: row; }
+
+
+  nav.navbar img { width: 100px; }
+
+  .banner-head { height: 348px;}
 }
 
-  
+
 @media screen and (min-width: 1024px) {
 }
-  
-  
+
+
 @media screen and (min-width: 1440px) {
 }
-  
+
 @media screen and (min-width: 1980px) {
 }
