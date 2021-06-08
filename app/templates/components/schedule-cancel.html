@@ -1,0 +1,55 @@
+<div class="modal" id="cancel-modal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cancelar</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex flex-wrap">
+          <span class="px-0">
+            Data do último Agendamento
+          </span>
+          <div class="col-12 rounded bg-info text-center p-2">
+            {{ "05-12-2021 (Exemplo)" }}
+          </div>
+        </div>
+
+        <div class="d-flex flex-wrap">
+          <span class="px-0">
+            Horario do último Agendamento
+          </span>
+          <div class="col-12 rounded bg-info text-center p-2">
+            {{ "18:25 (Exemplo)" }}
+          </div>
+        </div>
+
+        <div class="d-flex flex-wrap pt-3">
+          <span class="px-0">
+            Observações
+          </span>
+          <div class="col-12 rounded bg-info p-2">
+            {{ "Pintura de cabelo e cortar a franja. (Exemplo)" }}
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="col-12 d-flex flex-nowrap justify-content-around">
+          <div class="mb-3">
+            <button type="button" class="btn btn-warning btn-lg px-auto m-0" data-bs-dismiss="modal">
+              <span class="text-light">Voltar</span>
+              <img src="{{ url_for('static', filename='images/icons/back-arrow.svg') }}" class="icon-row"></i>
+            </button>
+          </div>
+          <form action="{{ url_for('views.schedule_cancel') }}" method="POST">
+            <input type="hidden" name="id" value="{{ '11' }}">
+            <button type="submit"  class="btn btn-danger btn-lg px-auto m-0">
+              <span class="text-light">Cancelar</span>
+              <img src="{{ url_for('static', filename='images/icons/x-circle.svg') }}" class="icon-row"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

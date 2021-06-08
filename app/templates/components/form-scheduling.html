@@ -1,8 +1,8 @@
 <div class="row justify-content-center py-md-4">
   <div class="col-10 col-sm-6 col-lg-5 col-xl-4 col-xxl-3 py-md-4">
-    <form class="form" method="POST" action="{{ url_for('views.scheduling') }}">
+    <form class="form" action="{{ url_for('views.scheduling') }}" method="POST">
       <div class="row form-group input-group-lg">
-        <label for="email" class="px-0">
+        <label for="hour" class="px-0">
           Hora de Agendamento
         </label>
 
@@ -41,13 +41,14 @@
         </div>
       </div>
 
-      <div class="d-flex pt-3">
-        <a href="javascript:javascript:history.go(-1)" class="btn btn-warning btn-lg mx-2">
-          <span class="text-dark">Voltar</span>
-          <img src="{{ url_for('static', filename='images/icons/back-arrow.svg') }}" class="icon-row"></i>
+      <div class="d-flex justify-content-around pt-3">
+        <a href="javascript:javascript:history.go(-1)" class="btn btn-warning btn-lg px-2 px-md-auto m-0">
+          <span class="text-light">Voltar</span>
+          <img src="{{ url_for('static', filename='images/icons/back-arrow.svg') }}" class="icon-row">
         </a>
-        <button type="submit" class="btn btn-primary btn-lg mx-2">
-          Agendar
+        <button type="submit" class="btn btn-primary btn-lg px-2 px-md-auto m-0">
+          <span>Agendar</span>
+          <img src="{{ url_for('static', filename='images/icons/clock-check.svg') }}" class="icon-row">
         </button>
       </div>
     </form>

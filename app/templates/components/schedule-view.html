@@ -1,0 +1,54 @@
+<div class="modal" id="view-modal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Visualizar</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex flex-wrap">
+          <span class="px-0">
+            Data do ultimo Agendamento
+          </span>
+          <div class="col-12 rounded bg-info text-center p-2">
+            {{ "05-12-2021 (Exemplo)" }}
+          </div>
+        </div>
+
+        <div class="d-flex flex-wrap">
+          <span class="px-0">
+            Horario do ultimo Agendamento
+          </span>
+          <div class="col-12 rounded bg-info text-center p-2">
+            {{ "18:25 (Exemplo)" }}
+          </div>
+        </div>
+
+        <div class="d-flex flex-wrap pt-3">
+          <span class="px-0">
+            Observações
+          </span>
+          <div class="col-12 rounded bg-info p-2">
+            {{ "Pintura de cabelo e cortar a franja. (Exemplo)" }}
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="col-12 d-flex flex-nowrap justify-content-around">
+          <div class="mb-3">
+            <button type="button" class="btn btn-warning btn-lg px-auto m-0" data-bs-dismiss="modal">
+              <span class="text-light">Voltar</span>
+              <img src="{{ url_for('static', filename='images/icons/back-arrow.svg') }}" class="icon-row"></i>
+            </button>
+          </div>
+          <div class="mb-3">
+            <a href="{{ url_for('views.reschedule') }}" class="btn btn-warning btn-lg px-auto m-0">
+              <span class="text-light">Regendar</span>
+              <img src="{{ url_for('static', filename='images/icons/clock.svg') }}" class="icon-row"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

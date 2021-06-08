@@ -41,4 +41,18 @@ nav.navbar img { width: 82px; }
 
 .btn-square span { font-size: 1.2rem; }
 
-img.icon-row { height: 1rem; }
+.btn span { font-size: 0.8rem; }
+
+img.icon-row,
+img.icon-account {
+  padding-left: 5px;
+  filter: invert(100%) sepia(0%) saturate(4300%) hue-rotate(222deg) brightness(122%) contrast(106%);
+}
+
+img.icon-row {
+  height: 0.8rem;
+}
+
+img.icon-account {
+  height: 1.3rem;
+}

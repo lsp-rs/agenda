@@ -1,39 +1,45 @@
 {% extends "base.html" %}
-{% block title %}Login{% endblock %}
+{% block title %}Horário{% endblock %}
 
 {% block content %}
 {% include "components/head-banner.html" %}
 <div class="row d-flex flex-row justify-content-center">
   <div class="col-md-10 p-5">
     <div class="d-flex flex-row flex-wrap justify-content-center">
-      <a href="{{ url_for('views.view_schedule') }}" class="btn btn-square bg-primary m-2">
+      <button type="button" class="btn btn-square bg-primary m-2" data-bs-toggle="modal" data-bs-target="#view-modal">
         <img src="{{ url_for('static', filename='images/icons/eye.svg') }}" class="icon"></i>
         <span>Visualizar</span>
-      </a>
+      </button>
 
-      <a href="{{ url_for('views.cancel_schedule') }}" class="btn btn-square bg-primary m-2">
+      <button type="button" class="btn btn-square bg-primary m-2" data-bs-toggle="modal" data-bs-target="#cancel-modal">
         <img src="{{ url_for('static', filename='images/icons/x-circle.svg') }}" class="icon"></i>
         <span>Cancelar</span>
-      </a>
+      </button>
 
-      <a href="{{ url_for('views.check_schedule') }}" class="btn btn-square bg-primary m-2">
+      <button type="button" class="btn btn-square bg-primary m-2" data-bs-toggle="modal" data-bs-target="#check-modal">
         <img src="{{ url_for('static', filename='images/icons/calendar-check.svg') }}" class="icon"></i>
         <span>Confirmar</span>
-      </a>
+      </button>
 
-      <a href="{{ url_for('views.history') }}" class="btn btn-square bg-primary m-2">
+      <button type="button" class="btn btn-square bg-primary m-2" data-bs-toggle="modal" data-bs-target="#history-modal">
         <img src="{{ url_for('static', filename='images/icons/history.svg') }}" class="icon"></i>
         <span>Histórico</span>
-      </a>
+      </button>
     </div>
   </div>
 </div>
 <div class="d-flex col-12 bg-light justify-content-center mt-5">
   <a href="javascript:javascript:history.go(-1)" class="btn btn-warning btn-lg">
-    <span class="text-dark">Voltar</span>
+    <span class="text-light">Voltar</span>
     <img src="{{ url_for('static', filename='images/icons/back-arrow.svg') }}" class="icon-row"></i>
   </a>
 </div>
+
+{% include "components/schedule-view.html" %}
+{% include "components/schedule-cancel.html" %}
+{% include "components/schedule-check.html" %}
+{% include "components/user-history.html" %}
+
 {% endblock %}
 
 {% block extra_scripts %}

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Login{% endblock %}
+{% block title %}Inicio{% endblock %}
 
 {% block content %}
 {% include "components/head-banner.html" %}
@@ -21,9 +21,9 @@
         <span>Calendário</span>
       </a>
 
-      <a href="{{ url_for('views.history') }}" class="btn btn-square bg-primary m-2">
-        <img src="{{ url_for('static', filename='images/icons/history.svg') }}" class="icon"></i>
-        <span>Histórico</span>
+      <a href="{{ url_for('views.suggestion') }}" class="btn btn-square bg-primary m-2">
+        <img src="{{ url_for('static', filename='images/icons/chat.svg') }}" class="icon"></i>
+        <span>Sugestões</span>
       </a>
     </div>
   </div>
