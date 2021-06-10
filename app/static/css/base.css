@@ -1,3 +1,10 @@
+body {
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+
 .background-left {
   background-image: url("../images/background_temp.jpg");
   background-size: cover;
