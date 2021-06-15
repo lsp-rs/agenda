@@ -20,25 +20,21 @@
         <img src="{{ url_for('static', filename='images/icons/calendar-check.svg') }}" class="icon"></i>
         <span>Confirmar</span>
       </button>
-
-      <button type="button" class="btn btn-square bg-primary m-2" data-bs-toggle="modal" data-bs-target="#history-modal">
-        <img src="{{ url_for('static', filename='images/icons/history.svg') }}" class="icon"></i>
-        <span>Histórico</span>
-      </button>
     </div>
   </div>
-</div>
-<div class="d-flex col-12 bg-light justify-content-center mt-5">
-  <a href="javascript:javascript:history.go(-1)" class="btn btn-warning btn-lg">
-    <span class="text-light">Voltar</span>
-    <img src="{{ url_for('static', filename='images/icons/back-arrow.svg') }}" class="icon-row"></i>
-  </a>
+  <div class="col-12">
+    <div class="d-flex col-12 flex-nowrap justify-content-center mt-5">
+      <a href="javascript:javascript:history.go(-1)" class="btn btn-warning btn-lg">
+        <span class="text-light">Voltar</span>
+        <img src="{{ url_for('static', filename='images/icons/back-arrow.svg') }}" class="icon-row"></i>
+      </a>
+    </div>
+  </div>
 </div>
 
 {% include "components/schedule-view.html" %}
 {% include "components/schedule-cancel.html" %}
 {% include "components/schedule-check.html" %}
-{% include "components/user-history.html" %}
 
 {% endblock %}
 

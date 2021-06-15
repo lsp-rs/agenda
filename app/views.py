@@ -61,17 +61,6 @@ def scheduling():
     return render_template("/schedule/scheduling.html", context=context)
 
 
-
-@blueprint_default.route("/reagendar", methods=("GET", "POST"))
-def reschedule():
-    context = {
-        "logged": True
-    }
-    if request.method == "POST":
-        return redirect(url_for("views.schedule"))
-    return render_template("/schedule/reschedule.html", context=context)
-
-
 @blueprint_default.route("/horario", methods=("GET", "POST"))
 def schedule():
     context = {
@@ -102,11 +91,3 @@ def calendar():
         "logged": True
     }
     return render_template("/home/calendar.html", context=context)
-
-
-@blueprint_default.route("/sugestao", methods=("GET", "POST"))
-def suggestion():
-    context = {
-        "logged": True
-    }
-    return render_template("/home/suggestion.html", context=context)
