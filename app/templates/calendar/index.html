@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Calendário{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/hello.week.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/hello.week.theme.min.css') }}">
+{% endblock %}
+
+{% block extra_scripts_top %}
+<script src="{{ url_for('static', filename='js/hello.week.min.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+{% include "components/head-banner.html" %}
+<div class="d-flex flex-row justify-content-center">
+  <div class="col-12 pt-5 px-2">
+    {% include "components/calendar.html" %}
+  </div>
+</div>
+{% endblock %}

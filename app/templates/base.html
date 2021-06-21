@@ -7,6 +7,9 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/media.css') }}">
+  {% block extra_css %}{% endblock %}
+  <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+  {% block extra_scripts_top %}{% endblock %}
   <title>Hora na Agenda {% block title %}{% endblock %}</title>
 </head>
 
@@ -17,11 +20,7 @@
 
     {% include "components/footer.html" %}
 
-    {% block extra_scripts %}{% endblock %}
   </div>
-
-  <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
-
+  {% block extra_scripts_bottom %}{% endblock %}
 </body>
-
 </html>

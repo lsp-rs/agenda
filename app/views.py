@@ -90,4 +90,4 @@ def calendar():
     context = {
         "logged": True
     }
-    return render_template("/home/calendar.html", context=context)
+    return render_template("/calendar/index.html", context=context)
