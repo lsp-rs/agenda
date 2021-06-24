@@ -1,4 +1,25 @@
-<div id="calendar" class="col-12"></div>
-<div></div>
+<div class="col-12 text-center pb-3">
+  <h4>Selecione um dia para visualizar a agenda</h4>
+</div>
 
+<div id="calendar" class="col-12 mb-5"></div>
+
+<div class="col-12 d-flex flex-nowrap justify-content-around">
+  <div class="mb-3">
+    <a href="{{ url_for('views.home') }}" class="btn btn-warning btn-lg px-2 px-md-auto m-0">
+      <span class="text-light">Inicio</span>
+      <img src="{{ url_for('static', filename='images/icons/home.svg') }}" class="icon-row"></i>
+    </a>
+  </div>
+  <div class="mb-3">
+    <button type="button"  class="btn btn-success btn-lg px-auto m-0" data-bs-toggle="modal" data-bs-target="#modal-schedules">
+      <span class="text-light">Ver Agenda</span>
+      <img src="{{ url_for('static', filename='images/icons/calendar.svg') }}" class="icon-row"></i>
+    </button>
+  </div>
+</div>
+
+{% include "components/modal-schedules.html" %}
+{% block extra_scripts_bottom %}
 <script src="{{ url_for('static', filename='js/calendar.js') }}"></script>
+{% endblock %}

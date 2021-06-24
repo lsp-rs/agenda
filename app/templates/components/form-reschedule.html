@@ -42,9 +42,9 @@
       </div>
 
       <div class="d-flex justify-content-around pt-3">
-        <a href="javascript:javascript:history.go(-1)" class="btn btn-warning btn-lg px-2 px-md-auto m-0">
-          <span class="text-light">Voltar</span>
-          <img src="{{ url_for('static', filename='images/icons/back-arrow.svg') }}" class="icon-row">
+        <a href="{{ url_for('views.home') }}" class="btn btn-warning btn-lg px-2 px-md-auto m-0">
+          <span class="text-light">Inicio</span>
+          <img src="{{ url_for('static', filename='images/icons/home.svg') }}" class="icon-row"></i>
         </a>
         <a href="{{ url_for('views.reschedule') }}" class="btn btn-primary btn-lg px-2 px-md-auto m-0">
           <span class="text-light">Regendar</span>
