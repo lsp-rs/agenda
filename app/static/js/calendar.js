@@ -3,7 +3,6 @@ const picked = document.querySelector('#date-picked');
 const calendar = new HelloWeek({
     langFolder: "static/js/langs/",
     selector: '#calendar',
-    nav: ['<','>'],
     lang: 'pt-BR',
     disabledDaysOfWeek: [0],
     disablePastDays: true,
@@ -32,7 +31,7 @@ const calendar = new HelloWeek({
     ],
     onSelect: () => {
         document.getElementById('calendar').scrollIntoView();
-        picked.value = new Date(calendar.lastSelectedDay).toLocaleDateString('pt-BR', {timeZone: 'UTC'});
+        picked.innerHTML = new Date(calendar.lastSelectedDay).toLocaleDateString('pt-BR', {timeZone: 'UTC'});
         // console.log(new Date(calendar.lastSelectedDay).toLocaleDateString('pt-BR', {timeZone: 'UTC'}));
         // console.log(calendar.getDays()); //Forma com erro.
     },

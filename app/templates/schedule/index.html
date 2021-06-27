@@ -1,41 +1,15 @@
 {% extends "base.html" %}
-{% block title %}Horário{% endblock %}
+{% block title %}Agendamento{% endblock %}
 
 {% block content %}
 {% include "components/head-banner.html" %}
 <div class="row d-flex flex-row justify-content-center">
   <div class="col-md-10 p-5">
     <div class="d-flex flex-row flex-wrap justify-content-center">
-      <button type="button" class="btn btn-square bg-primary m-2" data-bs-toggle="modal" data-bs-target="#view-modal">
-        <img src="{{ url_for('static', filename='images/icons/eye.svg') }}" class="icon"></i>
-        <span>Visualizar</span>
-      </button>
-
-      <button type="button" class="btn btn-square bg-primary m-2" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-        <img src="{{ url_for('static', filename='images/icons/x-circle.svg') }}" class="icon"></i>
-        <span>Cancelar</span>
-      </button>
-
-      <button type="button" class="btn btn-square bg-primary m-2" data-bs-toggle="modal" data-bs-target="#check-modal">
-        <img src="{{ url_for('static', filename='images/icons/calendar-check.svg') }}" class="icon"></i>
-        <span>Confirmar</span>
-      </button>
-    </div>
-  </div>
-  <div class="col-12">
-    <div class="d-flex col-12 flex-nowrap justify-content-center mt-5">
-      <a href="{{ url_for('views.home') }}" class="btn btn-warning btn-lg px-2 px-md-auto m-0">
-        <span class="text-light">Inicio</span>
-        <img src="{{ url_for('static', filename='images/icons/home.svg') }}" class="icon-row"></i>
-      </a>
+      {% include "components/form-scheduling.html" %}
     </div>
   </div>
 </div>
-
-{% include "components/schedule-view.html" %}
-{% include "components/schedule-cancel.html" %}
-{% include "components/schedule-check.html" %}
-
 {% endblock %}
 
 {% block extra_scripts %}

@@ -57,15 +57,7 @@ def scheduling():
         "logged": True
     }
     if request.method == "POST":
-        return redirect(url_for("views.schedule"))
-    return render_template("/schedule/scheduling.html", context=context)
-
-
-@blueprint_default.route("/horario", methods=("GET", "POST"))
-def schedule():
-    context = {
-        "logged": True
-    }
+        return redirect(url_for("views.home"))
     return render_template("/schedule/index.html", context=context)
 
 
@@ -80,7 +72,7 @@ def schedule_check():
 @blueprint_default.route("/cancelar", methods=("POST",))
 def schedule_cancel():
     if request.method == "POST":
-        return redirect(url_for("views.schedule"))
+        return redirect(url_for("views.home"))
     else:
         return redirect(url_for("views.home"))
 

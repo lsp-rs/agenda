@@ -11,21 +11,30 @@
         <span>Agendar</span>
       </a>
 
-      <a href="{{ url_for('views.schedule') }}" class="btn btn-square bg-primary m-2">
-        <img src="{{ url_for('static', filename='images/icons/arrival-time.svg') }}" class="icon"></i>
-        <span>Horário</span>
-      </a>
-
       <a href="{{ url_for('views.calendar') }}" class="btn btn-square bg-primary m-2">
         <img src="{{ url_for('static', filename='images/icons/calendar.svg') }}" class="icon"></i>
         <span>Calendário</span>
       </a>
 
+      <button type="button" class="btn btn-square bg-primary m-2" data-bs-toggle="modal" data-bs-target="#view-modal">
+        <img src="{{ url_for('static', filename='images/icons/eye.svg') }}" class="icon"></i>
+        <span>Visualizar</span>
+      </button>
+
+      <button type="button" class="btn btn-square bg-primary m-2" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+        <img src="{{ url_for('static', filename='images/icons/x-circle.svg') }}" class="icon"></i>
+        <span>Cancelar</span>
+      </button>
+
+      <button type="button" class="btn btn-square bg-primary m-2" data-bs-toggle="modal" data-bs-target="#check-modal">
+        <img src="{{ url_for('static', filename='images/icons/calendar-check.svg') }}" class="icon"></i>
+        <span>Confirmar</span>
+      </button>
     </div>
   </div>
 </div>
-{% endblock %}
-
-{% block extra_scripts %}
+{% include "components/schedule-view.html" %}
+{% include "components/schedule-cancel.html" %}
+{% include "components/schedule-check.html" %}
 
 {% endblock %}
