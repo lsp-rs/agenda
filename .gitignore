@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/flask,python,redis,vscode,git
 # Edit at https://www.toptal.com/developers/gitignore?templates=flask,python,redis,vscode,git
 
+volumes/*
+migrations/*
+
 ### Flask ###
 instance/*
 !instance/.gitignore

@@ -1,41 +1,24 @@
 <div class="row justify-content-center py-md-4">
   <div class="col-9 col-md-8 col-lg-6 py-md-4">
-    <form class="form" method="POST" action="{{ url_for('views.login') }}">
-      <div class="form-group input-group-lg">
-        <label for="fullname">
-          Nome Completo
-        </label>
-        <input type="text" name="fullname" id="fullname" class="form-control">
-      </div>
-
-      <div class="form-group input-group-lg pt-3">
-        <label for="birthday">
-          Data de Nascimento
-        </label>
-        <input type="date" name="birthday" id="birthday" class="form-control">
-      </div>
-
-      <div class="form-group input-group-lg pt-3">
-        <label for="email">
-          Email
-        </label>
-        <input type="email" name="email" id="email" class="form-control">
-      </div>
-
-      <div class="form-group input-group-lg pt-3">
-        <label for="password">
-          Senha
-        </label>
-        <input type="password" name="password" id="password" class="form-control">
-      </div>
-
-      <div class="form-group input-group-lg pt-3">
-        <label for="password-confirm">
-          Repita a Senha
-        </label>
-        <input type="password" name="password-confirm" id="password-confirm" class="form-control">
-      </div>
-
+    <form class="form" method="POST" action="{{ url_for('views.account_create') }}">
+      {{ context['form'].csrf_token }}
+      {% for form in context['form'] %}
+        {% if 'csrf_token' != form.name %}
+          <div class="form-group input-group-lg pt-2 pt-md-3">
+            {{ form.label }}
+            {{ form }}
+          </div>
+          {% if form.errors %}
+            <div class="alert alert-danger mt-2" role="alert">
+              <ul class="errors">
+                {% for error in form.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
       <div class="d-grid gap-2 pt-3">
         <button type="submit" class="btn btn-primary btn-lg my-2 mx-3">
           Cadastrar

@@ -5,25 +5,46 @@ from flask import (
     redirect,
     url_for
 )
-import os
+from app.forms import (
+    UserForm,
+    LoginForm,
+    ScheduleForm
+)
+
 
 blueprint_default = Blueprint("views", __name__)
 
 @blueprint_default.route("/", methods=("GET", "POST"))
 def index():
+    form = LoginForm()
     context = {
-        "logged": False
+        "logged": False,
+        "form": form
     }
     return render_template("/account/index.html", context=context)
 
 
 @blueprint_default.route("/cadastro", methods=("GET", "POST"))
 def account_create():
+    user_form = UserForm()
     context = {
-        "logged": False
+        "logged": False,
+        "form": user_form
     }
     if request.method == "POST":
-        return redirect(url_for("views.home"))
+        from app.utils.modal_user_helper import UserHelper
+
+        user_helper = UserHelper()
+
+        if user_form.validate_on_submit():
+            user_helper.new_user(
+                full_name=request.form["full_name"],
+                birthday=request.form["birthday"],
+                email=request.form["email"],
+                phone=request.form["phone"],
+                password=request.form["password"],
+            )
+            return redirect(url_for("views.home"))
     return render_template("/account/account-create.html", context=context)
 
 
@@ -53,8 +74,10 @@ def home():
 
 @blueprint_default.route("/agendar", methods=("GET", "POST"))
 def scheduling():
+    form = ScheduleForm()
     context = {
-        "logged": True
+        "logged": True,
+        "form": form
     }
     if request.method == "POST":
         return redirect(url_for("views.home"))

@@ -1,5 +1,21 @@
 version: '3.8'
 services:
+  db:
+    image: mysql:5.7.30
+    environment:
+      - MYSQL_ROOT_PASSWORD=Abacate2021
+      - MYSQL_DATABASE=agenda
+      - MYSQL_USER=super
+      - MYSQL_PASSWORD=a1b2c3e4
+    command: --default-authentication-plugin=mysql_native_password --innodb_use_native_aio=0 --character-set-server=utf8 --collation-server=utf8_unicode_ci
+    restart: always
+    volumes:
+      - ./volumes/db/:/var/lib/mysql
+    ports:
+      - "5306:3306"
+    networks:
+      - webnet
+
   app:
     build:
       context: .
@@ -8,13 +24,22 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - FLASK_ENV=development
+      - DB_HOST=db
+      - DB_BASE=agenda
+      - DB_USER=super
+      - DB_PASS=a1b2c3e4
+      - DB_PORT=3306
     volumes:
       - .:/app
+    depends_on:
+      - db
+      - redis
     ports:
       - "5000:5000"
     entrypoint: ["uwsgi", "--ini", "/app/wsgi.ini"]
     networks:
       - webnet
+
   redis:
     image: redis
     ports:

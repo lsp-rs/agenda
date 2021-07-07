@@ -6,10 +6,20 @@ from os import getenv
 class Config:
     APP_PORT = 5000
 
+    SECRET_KEY = "L0r3W#&#1p5um"
+
     SESSION_TYPE = 'redis'
     SESSION_REDIS = Redis(host=getenv('REDIS_HOST'), port=getenv('REDIS_PORT'), db=0)
 
     RESULT_BACKEND = f'redis://{getenv("REDIS_HOST")}:{getenv("REDIS_PORT")}'
+
+    DB_HOST = getenv('DB_HOST')
+    DB_BASE = getenv('DB_BASE')
+    DB_USER = getenv('DB_USER')
+    DB_PASS = getenv('DB_PASS')
+    DB_PORT = getenv('DB_PORT')
+    SQLALCHEMY_DATABASE_URI = f'mysql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_BASE}'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
     dictConfig({
