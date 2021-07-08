@@ -1,8 +1,9 @@
 from . import db
 from datetime import datetime
+from flask_login import UserMixin
 
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     __tablename__ = "user"
 
     id = db.Column(
@@ -28,7 +29,7 @@ class User(db.Model):
         nullable=True
     )
     password = db.Column(
-        db.String(80),
+        db.String(100),
         nullable=False
     )
     created_at = db.Column(

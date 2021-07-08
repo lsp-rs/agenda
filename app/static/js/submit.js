@@ -1,11 +1,11 @@
 (function() {
-    var element_cpf = document.getElementById('email'),
-        element_termos = document.getElementById('password'),
-        form_cpf = document.forms['form-login'];
+    var element_phone = document.getElementById('phone'),
+        element_birthday = document.getElementById('birthday'),
+        form_account_create = document.forms['form-account-create'];
 
-    form_cpf.onsubmit = function (event){
+    form_account_create.onsubmit = function (event){
         event.preventDefault();
-
-
+        element_phone.value = unmask_phone(element_phone);
+        form_account_create.submit();
     }
 })();

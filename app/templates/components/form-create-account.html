@@ -1,6 +1,6 @@
 <div class="row justify-content-center py-md-4">
   <div class="col-9 col-md-8 col-lg-6 py-md-4">
-    <form class="form" method="POST" action="{{ url_for('views.account_create') }}">
+    <form name="form-account-create" id="form-account-create" class="form" method="POST" action="{{ url_for('views.account_create') }}">
       {{ context['form'].csrf_token }}
       {% for form in context['form'] %}
         {% if 'csrf_token' != form.name %}
@@ -24,6 +24,9 @@
           Cadastrar
           <img src="{{ url_for('static', filename='images/icons/floppy-disk.svg') }}" class="icon-account">
         </button>
+      </div>
+      <div class="col-12 text-center pt-3">
+        <a href="{{ url_for('views.index') }}">Voltar</a>
       </div>
     </form>
   </div>

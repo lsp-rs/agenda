@@ -65,7 +65,7 @@ class UserForm(FlaskForm):
         render_kw={
             "class":"form-control"
         },
-        format='%d-%m-%Y'
+        format='%d/%m/%Y'
     )
     email = EmailField(
         "E-mail",
@@ -103,6 +103,9 @@ class UserForm(FlaskForm):
     )
     confirm_pass = PasswordField(
         "Repita a Senha",
+        validators=[
+            length(max=80)
+        ],
         render_kw={
             "class":"form-control"
         }

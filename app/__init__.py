@@ -3,6 +3,7 @@ from flask_session import Session
 from config import config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_login import LoginManager
 
 
 sess = Session()
@@ -17,8 +18,19 @@ def create_app(config_name, **kwargs):
     db.init_app(app)
     migrate.init_app(app, db)
 
+    login_manager = LoginManager()
+    login_manager.login_view = 'views.index'
+    login_manager.init_app(app)
+
     from . import models
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        # since the user_id is just the primary key of our user table, use it in the query for the user
+        return models.User.query.get(int(user_id))
+
     from . import views
+
     app.register_blueprint(views.blueprint_default, url_prefix='/agenda')
 
     # Registering static_folder
