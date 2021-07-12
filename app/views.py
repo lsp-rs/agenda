@@ -13,11 +13,6 @@ from flask import (
     redirect,
     url_for
 )
-from app.forms import (
-    UserForm,
-    LoginForm,
-    ScheduleForm
-)
 
 
 blueprint_default = Blueprint("views", __name__)
@@ -26,9 +21,6 @@ user_helper = UserHelper()
 
 @blueprint_default.route("/", methods=("GET", "POST"))
 def index():
-    if "_id" in session:
-        return redirect(url_for("views.home"))
-
     form = LoginForm()
 
     context = {
@@ -36,14 +28,15 @@ def index():
         "logged": False
     }
 
+    if "_id" in session:
+        context["logged"] = True
+        return redirect(url_for("views.home"))
+
     return render_template("/account/index.html", context=context)
 
 
 @blueprint_default.route("/cadastro", methods=("GET", "POST"))
 def account_create():
-    if "_id" in session:
-        return redirect(url_for("views.home"))
-
     user_form = UserForm()
 
     context = {
@@ -51,17 +44,26 @@ def account_create():
         "logged": False
     }
 
+    if "_id" in session:
+        context["logged"] = True
+        return redirect(url_for("views.home"))
+
     if request.method == "POST":
         print(user_form['birthday'])
         if user_form.validate_on_submit():
-            user_helper.new_user(
+            new_user = user_helper.new_user(
                 full_name=request.form["full_name"],
                 birthday=request.form["birthday"],
                 email=request.form["email"],
                 phone=request.form["phone"],
                 password=request.form["password"],
             )
-            return redirect(url_for("views.home"))
+
+            user = user_helper.login(email=request.form["email"],password=request.form["password"])
+
+            if user:
+                login_user(user)
+                return redirect(url_for("views.home"))
 
     return render_template("/account/account-create.html", context=context)
 
@@ -89,15 +91,27 @@ def logout():
 @login_required
 def home():
     context = {
-        "logged": True
+        "logged": True,
+        "type_user": "",
     }
+    type_user = user_helper.type_user(user_id=session["_user_id"])
+    context["type_user"] = type_user
+
     return render_template("/home/index.html", context=context)
 
 
 @blueprint_default.route("/agendar", methods=("GET", "POST"))
 @login_required
 def scheduling():
-    form = ScheduleForm()
+    form = ""
+    type_user = user_helper.type_user(user_id=session["_user_id"])
+
+    if type_user == "establishment_user":
+        from .forms import ScheduleFormeEstablishmentUser
+        form = ScheduleFormeEstablishmentUser()
+    else:
+        from .forms import ScheduleFormCommonUser
+        form = ScheduleFormCommonUser()
 
     context = {
         "form": form,
@@ -122,6 +136,15 @@ def schedule_check():
 @blueprint_default.route("/cancelar", methods=("POST",))
 @login_required
 def schedule_cancel():
+    if request.method == "POST":
+        return redirect(url_for("views.home"))
+    else:
+        return redirect(url_for("views.home"))
+
+
+@blueprint_default.route("/historico", methods=("POST",))
+@login_required
+def history():
     if request.method == "POST":
         return redirect(url_for("views.home"))
     else:

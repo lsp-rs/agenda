@@ -5,6 +5,7 @@ from werkzeug.security import (
 )
 from app.models import (
     User,
+    UserStatus,
     db
 )
 
@@ -23,10 +24,18 @@ class UserHelper():
         )
         db.session.add(new_user)
         db.session.commit()
+        return new_user
 
     def login(self, **kwargs):
-        user = User.query.filter_by(email=kwargs["email"]).first()
+        user = User.query.filter_by(email=kwargs["email"],status=UserStatus.activated).first()
 
         if not user or not check_password_hash(user.password, kwargs["password"]):
             return False
         return user
+
+    def type_user(self, **kwargs):
+        user = User.query.filter_by(id=kwargs["user_id"]).first()
+
+        if user.establishment_id:
+            return "establishment_user"
+        return "common_user"

@@ -6,6 +6,7 @@
 <div class="row d-flex flex-row justify-content-center">
   <div class="col-md-10 p-5">
     <div class="d-flex flex-row flex-wrap justify-content-center">
+      {% if "type_user" in context %}
       <a href="{{ url_for('views.scheduling') }}" class="btn btn-square bg-primary m-2">
         <img src="{{ url_for('static', filename='images/icons/clock.svg') }}" class="icon"></i>
         <span>Agendar</span>
@@ -15,21 +16,35 @@
         <img src="{{ url_for('static', filename='images/icons/calendar.svg') }}" class="icon"></i>
         <span>Calendário</span>
       </a>
+        {% if context["type_user"] == "establishment_user" %}
+        <a href="{{ url_for('views.history') }}" class="btn btn-square bg-primary m-2">
+          <img src="{{ url_for('static', filename='images/icons/history.svg') }}" class="icon"></i>
+          <span>Histórico</span>
+        </a>
+        {% endif %}
+        {% if "data_schedule" in context %}
+          {% if "status" in context["data_schedule"] %}
+            {% if not context["status"] == "unscheduled" %}
+            <button type="button" class="btn btn-square bg-primary m-2" data-bs-toggle="modal" data-bs-target="#view-modal">
+              <img src="{{ url_for('static', filename='images/icons/eye.svg') }}" class="icon"></i>
+              <span>Visualizar</span>
+            </button>
+              {% if context["status"] == "scheduled" %}
+              <a href="{{ url_for('views.schedule_cancel') }}" class="btn btn-square bg-primary m-2">
+                <img src="{{ url_for('static', filename='images/icons/x-circle.svg') }}" class="icon"></i>
+                <span>Cancelar</span>
+              </a>
 
-      <button type="button" class="btn btn-square bg-primary m-2" data-bs-toggle="modal" data-bs-target="#view-modal">
-        <img src="{{ url_for('static', filename='images/icons/eye.svg') }}" class="icon"></i>
-        <span>Visualizar</span>
-      </button>
-
-      <button type="button" class="btn btn-square bg-primary m-2" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-        <img src="{{ url_for('static', filename='images/icons/x-circle.svg') }}" class="icon"></i>
-        <span>Cancelar</span>
-      </button>
-
-      <button type="button" class="btn btn-square bg-primary m-2" data-bs-toggle="modal" data-bs-target="#check-modal">
-        <img src="{{ url_for('static', filename='images/icons/calendar-check.svg') }}" class="icon"></i>
-        <span>Confirmar</span>
-      </button>
+              {% elif context["status"] == "not_confirmed" %}
+              <a href="{{ url_for('views.schedule_check') }}" class="btn btn-square bg-primary m-2">
+                <img src="{{ url_for('static', filename='images/icons/calendar-check.svg') }}" class="icon"></i>
+                <span>Confirmar</span>
+              </a>
+              {% endif %}
+            {% endif %}
+          {% endif %}
+        {% endif %}
+      {% endif %}
     </div>
   </div>
 </div>

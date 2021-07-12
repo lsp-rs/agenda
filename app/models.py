@@ -1,6 +1,24 @@
+from sqlalchemy.orm import defaultload
 from . import db
 from datetime import datetime
 from flask_login import UserMixin
+import enum
+
+
+class OpenStatus(enum.Enum):
+    opened = "opened"
+    closed = "closed"
+
+
+class UserStatus(enum.Enum):
+    activated = "activated"
+    disabled = "disabled"
+
+
+class ScheduleStatus(enum.Enum):
+    not_confirmed = "not_confirmed"
+    scheduled = "scheduled"
+    unscheduled = "unscheduled"
 
 
 class User(UserMixin, db.Model):
@@ -31,6 +49,16 @@ class User(UserMixin, db.Model):
     password = db.Column(
         db.String(100),
         nullable=False
+    )
+    establishment_id = db.Column(
+        db.Integer,
+        db.ForeignKey('establishment.id'),
+        nullable=True
+    )
+    status = db.Column(
+        db.Enum(UserStatus),
+        nullable=True,
+        default=UserStatus.activated
     )
     created_at = db.Column(
         db.DateTime,
@@ -108,23 +136,10 @@ class Establishment(db.Model):
         db.Integer,
         primary_key=True
     )
-    name = db.Column(
-        db.String(80),
-        nullable=False
-    )
-    email = db.Column(
-        db.String(120),
-        unique=True,
-        nullable=False
-    )
-    phone = db.Column(
-        db.String(11),
-        unique=True,
-        nullable=True
-    )
-    password = db.Column(
-        db.String(80),
-        nullable=False
+    open_status = db.Column(
+        db.Enum(OpenStatus),
+        nullable=True,
+        default=OpenStatus.opened
     )
     servicehours_id = db.Column(
         db.Integer,
@@ -153,8 +168,9 @@ class Schedule(db.Model):
         nullable=False
     )
     status = db.Column(
-        db.String(15),
-        nullable=False
+        db.Enum(ScheduleStatus),
+        nullable=False,
+        default=ScheduleStatus.not_confirmed
     )
     note = db.Column(
         db.Text,
@@ -165,9 +181,9 @@ class Schedule(db.Model):
         db.ForeignKey('user.id'),
         nullable=False
     )
-    establishment_id = db.Column(
+    user_establishment_id = db.Column(
         db.Integer,
-        db.ForeignKey('establishment.id'),
+        db.ForeignKey('user.id'),
         nullable=False
     )
     created_at = db.Column(

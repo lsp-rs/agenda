@@ -1,4 +1,4 @@
-from re import I
+from .models import User
 from flask_wtf import FlaskForm
 from wtforms import (
     DateField,
@@ -17,6 +17,7 @@ from wtforms.validators import (
     EqualTo,
     length
 )
+from wtforms.ext.sqlalchemy.fields import QuerySelectField
 
 
 class LoginForm(FlaskForm):
@@ -112,7 +113,55 @@ class UserForm(FlaskForm):
     )
 
 
-class ScheduleForm(FlaskForm):
+class ScheduleFormCommonUser(FlaskForm):
+    date = DateField(
+        "Data de Agendamento",
+        validators=[
+            DataRequired()
+        ],
+        format="%d/%m/%Y",
+        render_kw={
+            "class":"form-control"
+        }
+    )
+    time = TimeField(
+        "Horario de Agendamento",
+        validators=[
+            DataRequired()
+        ],
+        format="%H:%M",
+        render_kw={
+            "class":"form-control"
+        }
+    )
+    note = TextAreaField(
+        "Observações",
+        validators=[
+            length(max=250),
+            DataRequired()
+        ],
+        render_kw={
+            "class":"form-control"
+        }
+    )
+
+
+class ScheduleFormeEstablishmentUser(FlaskForm):
+
+
+    def user_choices():
+        return User.query.filter_by(establishment_id=None).all()
+
+    user = QuerySelectField(
+        'Selecione um Cliente',
+        validators=[
+            DataRequired()
+        ],
+        query_factory=user_choices,
+        render_kw={
+            "class":"form-select"
+        }
+    )
     date = DateField(
         "Data de Agendamento",
         validators=[
