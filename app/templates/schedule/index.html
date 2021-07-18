@@ -12,6 +12,7 @@
 </div>
 {% endblock %}
 
-{% block extra_scripts %}
-
+{% block extra_scripts_bottom %}
+<script src="https://unpkg.com/imask"></script>
+<script src="{{ url_for('static', filename='js/mask_scheduling.js') }}"></script>
 {% endblock %}

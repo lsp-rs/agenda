@@ -1,6 +1,6 @@
 <div class="row justify-content-center py-md-4">
   <div class="col-12 col-sm-6 col-lg-5 col-xl-4 col-xxl-3 py-md-4">
-    <form class="form" action="{{ url_for('views.scheduling') }}" method="POST">
+    <form class="form" id="form-scheduling" name="form-scheduling" action="{{ url_for('views.scheduling') }}" method="POST">
       <div class="row form-group input-group-lg">
         {{ context['form'].csrf_token }}
         {% for form in context['form'] %}

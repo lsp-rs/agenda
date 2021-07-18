@@ -34,12 +34,8 @@ class LoginForm(FlaskForm):
     password = PasswordField(
         "Senha",
         validators=[
-            length(max=80),
-            InputRequired(),
-            EqualTo(
-                "confirm_pass",
-                message="As senhas devem corresponder."
-            )
+            length(max=100),
+            DataRequired()
         ],
         render_kw={
             "class":"form-control"

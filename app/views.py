@@ -1,9 +1,8 @@
 from flask.globals import session
-from app.utils.modal_user_helper import UserHelper
+from app.utils.model_user_helper import UserHelper
 from flask_login import (
     login_user,
     logout_user,
-    login_fresh,
     login_required
 )
 from flask import (
@@ -11,6 +10,7 @@ from flask import (
     render_template,
     request,
     redirect,
+    flash,
     url_for
 )
 
@@ -21,6 +21,7 @@ user_helper = UserHelper()
 
 @blueprint_default.route("/", methods=("GET", "POST"))
 def index():
+    from .forms import LoginForm
     form = LoginForm()
 
     context = {
@@ -37,6 +38,7 @@ def index():
 
 @blueprint_default.route("/cadastro", methods=("GET", "POST"))
 def account_create():
+    from .forms import UserForm
     user_form = UserForm()
 
     context = {
@@ -49,9 +51,8 @@ def account_create():
         return redirect(url_for("views.home"))
 
     if request.method == "POST":
-        print(user_form['birthday'])
         if user_form.validate_on_submit():
-            new_user = user_helper.new_user(
+            user_helper.new_user(
                 full_name=request.form["full_name"],
                 birthday=request.form["birthday"],
                 email=request.form["email"],
@@ -63,6 +64,7 @@ def account_create():
 
             if user:
                 login_user(user)
+                flash('Conta criada com sucesso!', 'success')
                 return redirect(url_for("views.home"))
 
     return render_template("/account/account-create.html", context=context)
@@ -70,12 +72,17 @@ def account_create():
 
 @blueprint_default.route("/login", methods=("POST",))
 def login():
-    if request.method == "POST":
-        user = user_helper.login(email=request.form["email"],password=request.form["password"])
+    from .forms import LoginForm
+    user_form = LoginForm()
 
-        if user:
-            login_user(user)
-            return redirect(url_for("views.home"))
+    if request.method == "POST":
+        if user_form.validate_on_submit():
+            user = user_helper.login(email=request.form["email"],password=request.form["password"])
+
+            if user:
+                login_user(user)
+                flash('Login efetuado com sucesso!', 'info')
+                return redirect(url_for("views.home"))
 
     return redirect(url_for("views.index"))
 
@@ -93,9 +100,26 @@ def home():
     context = {
         "logged": True,
         "type_user": "",
+        "view_schedule": [],
+        "not_confirmed": [],
+        "scheduled": [],
     }
-    type_user = user_helper.type_user(user_id=session["_user_id"])
+    type_user = user_helper.type_user(
+        user_id=session["_user_id"]
+    )
     context["type_user"] = type_user
+    context["view_schedule"] = user_helper.view_schedule(
+        user_id = session["_user_id"],
+        type_user = type_user
+    )
+    context["not_confirmed"] = user_helper.not_confirmed_schedule(
+        user_id = session["_user_id"],
+        type_user = type_user
+    )
+    context["scheduled"] = user_helper.scheduled_schedule(
+        user_id = session["_user_id"],
+        type_user = type_user
+    )
 
     return render_template("/home/index.html", context=context)
 
@@ -103,23 +127,41 @@ def home():
 @blueprint_default.route("/agendar", methods=("GET", "POST"))
 @login_required
 def scheduling():
-    form = ""
+    form_schedule = ""
     type_user = user_helper.type_user(user_id=session["_user_id"])
 
     if type_user == "establishment_user":
         from .forms import ScheduleFormeEstablishmentUser
-        form = ScheduleFormeEstablishmentUser()
+        form_schedule = ScheduleFormeEstablishmentUser()
     else:
         from .forms import ScheduleFormCommonUser
-        form = ScheduleFormCommonUser()
+        form_schedule = ScheduleFormCommonUser()
 
     context = {
-        "form": form,
+        "form": form_schedule,
         "logged": True
     }
 
     if request.method == "POST":
-        return redirect(url_for("views.home"))
+        if form_schedule.validate_on_submit():
+            if type_user == "establishment_user":
+                user_helper.user_scheduling(
+                    date=request.form["date"],
+                    time=request.form["time"],
+                    common_user_id=request.form["user"],
+                    establishment_user_id=session["_user_id"],
+                    note=request.form["note"],
+                )
+            else:
+                user_helper.user_scheduling(
+                    date=request.form["date"],
+                    time=request.form["time"],
+                    common_user_id=session["_user_id"],
+                    note=request.form["note"],
+                )
+
+            flash('Agendamento enviado com sucesso! Aguarde a confirmação.', 'info')
+            return redirect(url_for("views.home"))
 
     return render_template("/schedule/index.html", context=context)
 

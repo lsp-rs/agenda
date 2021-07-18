@@ -6,27 +6,18 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-
         <div class="d-flex align-items-start">
-          <div class="nav flex-column nav-tabs align-items-end" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <button class="nav-link active" id="v-pills-09-tab" data-bs-toggle="pill" data-bs-target="#v-pills-09" type="button" role="tab" aria-controls="v-pills-09" aria-selected="true">09:00</button>
-            <button class="nav-link" id="v-pills-10-tab" data-bs-toggle="pill" data-bs-target="#v-pills-10" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">10:00</button>
-            <button class="nav-link" id="v-pills-11-tab" data-bs-toggle="pill" data-bs-target="#v-pills-11" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">11:00</button>
-            <button class="nav-link" id="v-pills-13-tab" data-bs-toggle="pill" data-bs-target="#v-pills-13" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">13:00</button>
+          <div class="nav nav-pills flex-column align-items-end" id="v-pills" role="tablist" aria-orientation="vertical">
+            {% for hour in context["schedules"]["hour_main"] %}
+            <button class="nav-link active" id="v-pills-{{ hour }}-tab" data-bs-toggle="pill" data-bs-target="#v-pills-{{ hour }}" type="button" role="tab" aria-controls="v-pills-{{ hour }}" aria-selected="true">{{ hour }}:00</button>
+            {% endfor %}
           </div>
-          <div class="tab-content" id="v-pills-tabContent">
-            <div class="tab-pane fade show active" id="v-pills-09" role="tabpanel" aria-labelledby="v-pills-09-tab">
-              Fulano
+          <div class="tab-content px-2" id="v-pills-tabContent">
+            {% for hour in context["schedules"]["hour_main"] %}
+            <div class="tab-pane fade show active" id="v-pills-{{ hour }}" role="tabpanel" aria-labelledby="v-pills-{{ hour }}-tab">
+              {{ context["schedules"]["hour_main"][hour]["name"]}} - {{ context["schedules"]["hour_main"][hour]["hour"] }}
             </div>
-            <div class="tab-pane fade" id="v-pills-10" role="tabpanel" aria-labelledby="v-pills-10-tab">
-              Ciclano
-            </div>
-            <div class="tab-pane fade" id="v-pills-11" role="tabpanel" aria-labelledby="v-pills-11-tab">
-              Chico
-            </div>
-            <div class="tab-pane fade" id="v-pills-13" role="tabpanel" aria-labelledby="v-pills-13-tab">
-              Chicó
-            </div>
+            {% endfor %}
           </div>
         </div>
 

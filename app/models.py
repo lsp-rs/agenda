@@ -15,9 +15,15 @@ class UserStatus(enum.Enum):
     disabled = "disabled"
 
 
+class Interval(enum.Enum):
+    yes = "yes"
+    no = "no"
+
+
 class ScheduleStatus(enum.Enum):
     not_confirmed = "not_confirmed"
     scheduled = "scheduled"
+    concluded = "concluded"
     unscheduled = "unscheduled"
 
 
@@ -67,7 +73,7 @@ class User(UserMixin, db.Model):
     )
 
     def __repr__(self):
-        return '<User %r>' % self.full_name
+        return '%r' % self.full_name
 
 
 class Hour(db.Model):
@@ -85,6 +91,10 @@ class Hour(db.Model):
         db.Time,
         nullable=False,
     )
+    interval = db.Column(
+        db.Enum(Interval),
+        nullable=False,
+    )
     interval_hour = db.Column(
         db.Time,
         nullable=False,
@@ -100,7 +110,7 @@ class Hour(db.Model):
     )
 
     def __repr__(self):
-        return '<Hour %r>' % self.id
+        return 'Hour %r' % self.id
 
 
 class ServiceHours(db.Model):
@@ -126,7 +136,7 @@ class ServiceHours(db.Model):
     )
 
     def __repr__(self):
-        return '<ServiceHours %r>' % self.id
+        return 'ServiceHours id %r' % self.id
 
 
 class Establishment(db.Model):
@@ -153,7 +163,7 @@ class Establishment(db.Model):
     )
 
     def __repr__(self):
-        return '<Establishment %r>' % self.name
+        return 'Establishment id %r' % self.id
 
 
 class Schedule(db.Model):
@@ -193,5 +203,5 @@ class Schedule(db.Model):
     )
 
     def __repr__(self):
-        return '<Schedule %r>' % self.date_and_time
+        return 'Schedule %r' % self.date_and_time
 

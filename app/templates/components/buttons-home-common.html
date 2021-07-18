@@ -1,0 +1,28 @@
+<div class="d-flex flex-row flex-wrap justify-content-center">
+  <a href="{{ url_for('views.scheduling') }}" class="btn btn-square bg-primary m-2">
+    <img src="{{ url_for('static', filename='images/icons/clock.svg') }}" class="icon"></i>
+    <span>Agendar</span>
+  </a>
+  <a href="{{ url_for('views.calendar') }}" class="btn btn-square bg-primary m-2">
+    <img src="{{ url_for('static', filename='images/icons/calendar.svg') }}" class="icon"></i>
+    <span>Calendário</span>
+  </a>
+  {% if context["view_schedule"]|length > 0 %}
+  <button type="button" class="btn btn-square bg-primary m-2" data-bs-toggle="modal" data-bs-target="#view-modal">
+    <img src="{{ url_for('static', filename='images/icons/eye.svg') }}" class="icon"></i>
+    <span>Visualizar</span>
+  </button>
+  {% endif %}
+  {% if context["not_confirmed"]|length > 0 %}
+  <button type="button" class="btn btn-square bg-primary m-2" data-bs-toggle="modal" data-bs-target="#check-modal">
+    <img src="{{ url_for('static', filename='images/icons/calendar-check.svg') }}" class="icon"></i>
+    <span>Confirmar</span>
+  </button>
+  {% endif %}
+  {% if context["scheduled"]|length > 0 %}
+  <button type="button" class="btn btn-square bg-primary m-2" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+    <img src="{{ url_for('static', filename='images/icons/x-circle.svg') }}" class="icon"></i>
+    <span>Cancelar</span>
+  </button>
+  {% endif %}
+</div>
