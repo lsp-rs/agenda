@@ -5,15 +5,26 @@
 {% include "components/head-banner.html" %}
 <div class="d-flex flex-wrap justify-content-center">
   {% with messages = get_flashed_messages(category_filter=["info"]) %}
-    <div class="col-md-12 p-2">
-      {% if messages %}
-        <div class="alert alert-success text-center mt-2" role="alert">
-        {% for message in messages %}
-          <p class="m-0">{{ message }}</p>
-        {% endfor %}
-        </div>
-      {% endif %}
+  {% if messages %}
+  <div class="col-md-12 p-2">
+    <div class="alert alert-success text-center mt-2" role="alert">
+    {% for message in messages %}
+      <p class="m-0">{{ message }}</p>
+    {% endfor %}
     </div>
+  </div>
+  {% endif %}
+  {% endwith %}
+  {% with messages = get_flashed_messages(category_filter=["warning"]) %}
+  {% if messages %}
+  <div class="col-md-12 p-2">
+    <div class="alert alert-warning text-center mt-2" role="alert">
+      {% for message in messages %}
+      <p class="m-0">{{ message }}</p>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
   {% endwith %}
   <div class="col-md-12 p-5">
     {% if "type_user" in context %}
@@ -21,12 +32,12 @@
       {% include "components/buttons-home-establishment.html" %}
     {% else %}
       {% include "components/buttons-home-common.html" %}
+      {% include "components/schedule-view.html" %}
+      {% include "components/schedule-cancel.html" %}
+      {% include "components/schedule-check.html" %}
     {% endif %}
     {% endif %}
   </div>
 </div>
-{% include "components/schedule-view.html" %}
-{% include "components/schedule-cancel.html" %}
-{% include "components/schedule-check.html" %}
 
 {% endblock %}

@@ -1,6 +1,6 @@
 (function() {
     var date_element = document.getElementById('date'),
-        time_element = document.getElementById('time');
+        time_element = document.getElementById('time'),
         form_scheduling = document.forms['form-scheduling'];
 
     form_scheduling.onsubmit = function (event){

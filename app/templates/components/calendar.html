@@ -2,24 +2,28 @@
   <h4>Selecione um dia para visualizar a agenda</h4>
 </div>
 
-<div id="calendar" class="col-12 mb-5"></div>
+<div id="calendar" class="col-12 col-md-6 mb-5"></div>
 
-<div class="col-12 d-flex flex-nowrap justify-content-around">
-  <div class="mb-3">
-    <a href="{{ url_for('views.home') }}" class="btn btn-warning btn-lg px-2 px-md-auto m-0">
-      <span class="text-light">Inicio</span>
-      <img src="{{ url_for('static', filename='images/icons/home.svg') }}" class="icon-row"></i>
-    </a>
-  </div>
-  <div class="mb-3">
-    <button type="button"  class="btn btn-success btn-lg px-auto m-0" data-bs-toggle="modal" data-bs-target="#modal-schedules">
-      <span class="text-light">Ver Agenda</span>
-      <img src="{{ url_for('static', filename='images/icons/calendar.svg') }}" class="icon-row"></i>
-    </button>
+<div class="col-12 d-flex flex-nowrap justify-content-center">
+  <div class="col-12 col-md-5 d-flex flex-nowrap justify-content-around">
+    <div class="mb-3">
+      <a href="{{ url_for('views.home') }}" class="btn btn-warning btn-lg px-2 px-md-auto m-0">
+        <span class="text-light">Inicio</span>
+        <img src="{{ url_for('static', filename='images/icons/home.svg') }}" class="icon-row"></i>
+      </a>
+    </div>
+    <div class="mb-3">
+      <form id="form-calendar" name="form-calendar" method="POST" action="{{ url_for('views.calendar_detail') }}">
+        <input type="hidden" id="date-picked" name="date-picked" value="">
+        <button type="submit"  class="btn btn-success btn-lg px-auto m-0">
+          <span class="text-light">Ver Agenda</span>
+          <img src="{{ url_for('static', filename='images/icons/calendar.svg') }}" class="icon-row"></i>
+        </button>
+      </form>
+    </div>
   </div>
 </div>
-
-{% include "components/modal-schedules.html" %}
 {% block extra_scripts_bottom %}
+<script src="{{ url_for('static', filename='js/submit_date.js') }}"></script>
 <script src="{{ url_for('static', filename='js/calendar.js') }}"></script>
 {% endblock %}

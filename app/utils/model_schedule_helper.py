@@ -13,7 +13,6 @@ from sqlalchemy import and_
 class ScheduleHelper():
 
     def service_hour(self, establishment_user):
-        print("ScheduleHelper.service_hour() :: OK")
         return ServiceHours.query.with_entities(
             ServiceHours.weekdays,
             Hour.ini_hour,
@@ -31,27 +30,22 @@ class ScheduleHelper():
 
 
     def service_hour_verify(self, establishment_user, hour_verify):
-        print("ScheduleHelper.service_hour_verify() :: OK")
         service_hour = self.service_hour(establishment_user)
+
         if (
             hour_verify["weekday"] in service_hour["weekdays"] and
             hour_verify["hour"] > service_hour["ini_hour"] and
             hour_verify["hour"] < service_hour["end_hour"]
         ):
-            print("ScheduleHelper.service_hour_verify().if#1 :: OK")
-
             if service_hour["interval"] == Interval.yes:
-                print("ScheduleHelper.service_hour_verify().if#2 :: OK")
                 if(
                     hour_verify["hour"] < service_hour["interval_hour"] and
                     hour_verify["hour"] > service_hour["comeback_hour"]
                 ):
-                    print("ScheduleHelper.service_hour_verify().if#3 :: OK")
                     return True
             else:
-                print("ScheduleHelper.service_hour_verify().else#1 :: OK")
                 return True
-        print("ScheduleHelper.service_hour_verify().FalseAll :: OK")
+
         return False
 
 
@@ -60,7 +54,13 @@ class ScheduleHelper():
             "hour_main" : {}
         }
 
+        if "date" in kwargs:
+            date_filter  = datetime.strptime(kwargs["date"], '%d/%m/%Y')
+        else:
+            date_filter = datetime.today()
+
         result_schedules = Schedule.query.with_entities(
+            User.id,
             User.full_name,
             Schedule.date_and_time,
         ).outerjoin(
@@ -68,28 +68,49 @@ class ScheduleHelper():
             User.id == Schedule.user_id
         ).filter(
             and_(
-                Schedule.user_establishment_id == kwargs["user_id"],
                 Schedule.status.in_(
                     [
                         "scheduled",
+                        "not_confirmed"
                     ]
                 ),
-                Schedule.date_and_time == kwargs["date"]
+                Schedule.date_and_time.like(f"%{date_filter.date()}%")
             )
         ).order_by(
             Schedule.date_and_time
         ).all()
 
+        schedule_data["hour_main"] = {}
+        list_schedules = []
+
+        hour_aux = ""
+
         for schedule in result_schedules:
+
+            hour_aux = schedule.date_and_time.strftime('%H')
+
+            if hour_aux == schedule.date_and_time.strftime('%H'):
+                list_schedules.append(
+                    {
+                        "name" : schedule.id,
+                        "name" : schedule.full_name,
+                        "hour" : schedule.date_and_time.strftime("%H:%M")
+                    }
+                )
+            else:
+                list_schedules = []
+                list_schedules.append(
+                    {
+                        "name" : schedule.id,
+                        "name" : schedule.full_name,
+                        "hour" : schedule.date_and_time.strftime("%H:%M")
+                    }
+                )
+
             schedule_data[
                 "hour_main"
             ][
                 f"{schedule.date_and_time.strftime('%H')}"
-            ].append(
-                {
-                    "name" : schedule.full_name,
-                    "hour" : schedule.date_and_time.strftime("%H:%M")
-                }
-            )
+            ] = list_schedules
 
-        print(schedule_data)
+        return schedule_data

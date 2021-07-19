@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Confirmar{% endblock %}
+
+{% block content %}
+{% include "components/head-banner.html" %}
+<div class="d-flex flex-wrap justify-content-center">
+
+{% if context["type_user"] == "establishment_user" %}
+  {% include "components/list-check-establishment.html" %}
+{% endif %}
+
+</div>
+<div class="col-12 d-flex flex-nowrap justify-content-around">
+  <div class="mb-3">
+    <a href="{{ url_for('views.home') }}" class="btn btn-warning btn-lg px-2 px-md-auto m-0">
+      <span class="text-light">Inicio</span>
+      <img src="{{ url_for('static', filename='images/icons/home.svg') }}" class="icon-row"></i>
+    </a>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,51 @@
+{% if context["schedules"]["hour_main"] %}
+<div class="col-12 d-flex flex-wrap justify-content-center">
+  <div class="col-12 col-md-8 col-lg-5 d-flex flex-nowrap justify-content-around">
+    <div class="nav nav-pills flex-column align-items-end" id="v-pills" role="tablist" aria-orientation="vertical">
+      {% for hour in context["schedules"]["hour_main"] %}
+      <button class="nav-link active" id="v-pills-{{ hour }}-tab" data-bs-toggle="pill" data-bs-target="#v-pills-{{ hour }}" type="button" role="tab" aria-controls="v-pills-{{ hour }}" aria-selected="true">{{ hour }}:00</button>
+      {% endfor %}
+    </div>
+    <div class="tab-content px-2" id="v-pills-tabContent">
+      {% for hour in context["schedules"]["hour_main"] %}
+      {% for user_schedule in context["schedules"]["hour_main"][hour] %}
+        <div class="tab-pane fade show active" id="v-pills-{{ hour }}" role="tabpanel" aria-labelledby="v-pills-{{ hour }}-tab">
+          {{ user_schedule["name"] }} - {{ user_schedule["hour"] }}
+        </div>
+      {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% else %}
+<div class="col-12  d-flex flex-nowrap justify-content-center">
+  <div class="col-12 col-md-8 col-lg-5 mb-3 text-center">
+    <p>Ops! Não achamos agendamento nesta data!</p>
+    <img src="{{ url_for('static', filename='images/icons/schedule_not_found.svg') }}" width="100%">
+  </div>
+</div>
+{% endif %}
+
+<div class="col-12 d-flex flex-nowrap mt-5 justify-content-center">
+  <div class="col-12 col-md-5 col-lg-3 d-flex flex-nowrap mt-5 justify-content-around">
+    <div class="mb-3">
+      <a href="{{ url_for('views.home') }}" class="btn btn-warning btn-lg px-2 px-md-auto m-0">
+        <span class="text-light">Inicio</span>
+        <img src="{{ url_for('static', filename='images/icons/home.svg') }}" class="icon-row">
+      </a>
+    </div>
+    <div class="mb-3">
+      <a href="{{ url_for('views.calendar') }}" class="btn btn-warning btn-lg px-2 px-md-auto m-0">
+        <span class="text-light">Calendario</span>
+        <img src="{{ url_for('static', filename='images/icons/calendar.svg') }}" class="icon-row">
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+$('#hour-tab a').on('click', function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+})
+</script>

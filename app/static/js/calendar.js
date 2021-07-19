@@ -31,8 +31,6 @@ const calendar = new HelloWeek({
     ],
     onSelect: () => {
         document.getElementById('calendar').scrollIntoView();
-        picked.innerHTML = new Date(calendar.lastSelectedDay).toLocaleDateString('pt-BR', {timeZone: 'UTC'});
-        // console.log(new Date(calendar.lastSelectedDay).toLocaleDateString('pt-BR', {timeZone: 'UTC'}));
-        // console.log(calendar.getDays()); //Forma com erro.
+        picked.value = new Date(calendar.lastSelectedDay).toLocaleDateString('pt-BR', {timeZone: 'UTC'});
     },
 });

@@ -1,0 +1,35 @@
+{% if context["not_confirmed"]|length > 0 %}
+<div class="col-12 col-md-10 col-lg-8 d-flex flex-wrap justify-content-center">
+  <span class="p-2">
+    Clientes Agendados
+  </span>
+  {% for schedules in context["not_confirmed"] %}
+  <div class="col-12 d-flex flex-nowrap rounded bg-light text-center p-2 mb-1">
+    <div class="col-3 p-1">
+      <span>{{ schedules["full_name"] }}</span>
+    </div>
+    <div class="col-3 p-1">
+      <span>{{ schedules["date"] }}</span>
+    </div>
+    <div class="col-3 p-1">
+      <span>{{ schedules["hour"] }}</span>
+    </div>
+    <div class="col-3 p-1">
+      <form action="{{ url_for('views.schedule_check') }}" class="p-0 m-0" method="POST">
+        <input type="hidden" name="user_id" value="{{ schedules['user_id'] }}">
+        <button type="submit"  class="btn btn-success btn-sm">
+          <img src="{{ url_for('static', filename='images/icons/check-circle.svg') }}" class="icon-row p-0 m-0">
+        </button>
+      </form>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="col-12  d-flex flex-nowrap justify-content-center mt-5">
+  <div class="col-12 col-md-8 col-lg-5 mb-3 text-center">
+    <p>Não existem agendamentos pendentes.</p>
+    <img src="{{ url_for('static', filename='images/icons/schedule_not_found.svg') }}" width="100%">
+  </div>
+</div>
+{% endif %}
