@@ -1,17 +1,33 @@
+{% if context["date_picked"] %}
+<div class="col-12 d-flex flex-wrap mb-3 justify-content-center">
+  <h5>{{context["date_picked"]}}</h5>
+</div>
+{% endif %}
 {% if context["schedules"]["hour_main"] %}
 <div class="col-12 d-flex flex-wrap justify-content-center">
-  <div class="col-12 col-md-8 col-lg-5 d-flex flex-nowrap justify-content-around">
-    <div class="nav nav-pills flex-column align-items-end" id="v-pills" role="tablist" aria-orientation="vertical">
+  <div class="col-12 col-md-8 col-lg-5 d-flex flex-nowrap bg-light p-1 p-md-2 justify-content-between">
+    <div class="nav nav-pills flex-column" id="v-pills" role="tablist" aria-orientation="vertical">
       {% for hour in context["schedules"]["hour_main"] %}
+      {% if loop.index == 1 %}
       <button class="nav-link active" id="v-pills-{{ hour }}-tab" data-bs-toggle="pill" data-bs-target="#v-pills-{{ hour }}" type="button" role="tab" aria-controls="v-pills-{{ hour }}" aria-selected="true">{{ hour }}:00</button>
+      {% else %}
+      <button class="nav-link" id="v-pills-{{ hour }}-tab" data-bs-toggle="pill" data-bs-target="#v-pills-{{ hour }}" type="button" role="tab" aria-controls="v-pills-{{ hour }}" aria-selected="true">{{ hour }}:00</button>
+      {% endif %}
       {% endfor %}
     </div>
     <div class="tab-content px-2" id="v-pills-tabContent">
       {% for hour in context["schedules"]["hour_main"] %}
+      {% set index_loop = loop.index %}
       {% for user_schedule in context["schedules"]["hour_main"][hour] %}
-        <div class="tab-pane fade show active" id="v-pills-{{ hour }}" role="tabpanel" aria-labelledby="v-pills-{{ hour }}-tab">
-          {{ user_schedule["name"] }} - {{ user_schedule["hour"] }}
-        </div>
+      {% if index_loop == 1 %}
+      <div class="tab-pane fade show active" id="v-pills-{{ hour }}" role="tabpanel" aria-labelledby="v-pills-{{ hour }}-tab">
+        {{ user_schedule["name"] }} - {{ user_schedule["hour"] }}
+      </div>
+      {% else %}
+      <div class="tab-pane fade" id="v-pills-{{ hour }}" role="tabpanel" aria-labelledby="v-pills-{{ hour }}-tab">
+        {{ user_schedule["name"] }} - {{ user_schedule["hour"] }}
+      </div>
+      {% endif %}
       {% endfor %}
       {% endfor %}
     </div>
@@ -21,6 +37,7 @@
 <div class="col-12  d-flex flex-nowrap justify-content-center">
   <div class="col-12 col-md-8 col-lg-5 mb-3 text-center">
     <p>Ops! Não achamos agendamento nesta data!</p>
+    <p>Faça seu agendamento <a href="{{ url_for('views.scheduling') }}">aqui!</a></p>
     <img src="{{ url_for('static', filename='images/icons/schedule_not_found.svg') }}" width="100%">
   </div>
 </div>

@@ -73,7 +73,7 @@ class User(UserMixin, db.Model):
     )
 
     def __repr__(self):
-        return '%r' % self.full_name
+        return self.full_name
 
 
 class Hour(db.Model):
@@ -192,6 +192,11 @@ class Schedule(db.Model):
         nullable=False
     )
     user_establishment_id = db.Column(
+        db.Integer,
+        db.ForeignKey('user.id'),
+        nullable=False
+    )
+    created_by = db.Column(
         db.Integer,
         db.ForeignKey('user.id'),
         nullable=False

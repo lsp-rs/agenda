@@ -1,4 +1,8 @@
-from datetime import datetime
+from datetime import (
+    datetime,
+    date
+)
+from .local_debug import debug
 from app.models import (
     Establishment,
     User,
@@ -7,7 +11,11 @@ from app.models import (
     Schedule,
     ServiceHours
 )
-from sqlalchemy import and_
+from sqlalchemy import (
+    and_,
+    Date,
+    cast
+)
 
 
 class ScheduleHelper():
@@ -34,13 +42,13 @@ class ScheduleHelper():
 
         if (
             hour_verify["weekday"] in service_hour["weekdays"] and
-            hour_verify["hour"] > service_hour["ini_hour"] and
-            hour_verify["hour"] < service_hour["end_hour"]
+            hour_verify["hour"] >= service_hour["ini_hour"] and
+            hour_verify["hour"] <= service_hour["end_hour"]
         ):
             if service_hour["interval"] == Interval.yes:
                 if(
                     hour_verify["hour"] < service_hour["interval_hour"] and
-                    hour_verify["hour"] > service_hour["comeback_hour"]
+                    hour_verify["hour"] >= service_hour["comeback_hour"]
                 ):
                     return True
             else:
@@ -87,8 +95,6 @@ class ScheduleHelper():
 
         for schedule in result_schedules:
 
-            hour_aux = schedule.date_and_time.strftime('%H')
-
             if hour_aux == schedule.date_and_time.strftime('%H'):
                 list_schedules.append(
                     {
@@ -107,6 +113,8 @@ class ScheduleHelper():
                     }
                 )
 
+            hour_aux = schedule.date_and_time.strftime('%H')
+
             schedule_data[
                 "hour_main"
             ][
@@ -114,3 +122,63 @@ class ScheduleHelper():
             ] = list_schedules
 
         return schedule_data
+
+
+    def schedule_per_day(self):
+        result_schedule = Schedule.query.with_entities(
+            Schedule.date_and_time
+        ).filter(
+            and_(
+                Schedule.status.in_(
+                    [
+                        "scheduled",
+                        "not_confirmed",
+                        "concluded"
+                    ]
+                ),
+                cast(Schedule.date_and_time, Date) >= date.today()
+            )
+        ).all()
+
+        return result_schedule
+
+
+    def level(self, quantity):
+        if quantity <= 0:
+            return None
+        if quantity < 2:
+            return 'low'
+        elif quantity < 4:
+            return 'medium'
+        else:
+            return 'high'
+
+
+    def schedules_day_level(self):
+        result_schedules = self.schedule_per_day()
+        date_aux = ""
+        count_per_day = 0
+        day_counter = {}
+
+        if result_schedules:
+            for schedule in result_schedules:
+                date_schedule = schedule.date_and_time.strftime("%Y-%m-%d")
+                if date_aux == date_schedule:
+                    count_per_day += 1
+                else:
+                    count_per_day = 0
+                    date_aux = date_schedule
+                    count_per_day +=1
+                day_counter[date_aux] = self.level(count_per_day)
+        return day_counter
+
+    def hour_of_schedule(self):
+        result_hour = Hour.query.with_entities(
+            Hour.ini_hour,
+            Hour.end_hour
+        ).first()
+        hour = {
+            "ini" : result_hour.ini_hour.strftime("%H:%M"),
+            "end" : result_hour.end_hour.strftime("%H:%M")
+        }
+        return hour

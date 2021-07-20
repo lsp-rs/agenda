@@ -7,30 +7,32 @@
       </div>
       <div class="modal-body">
         <div class="d-flex flex-wrap">
-          <span class="px-0">
-            Data do último Agendamento
+          {% for schedule in context["scheduled"] %}
+          <span class="px-0 pb-1">
+            Status do Agendamento
           </span>
-          <div class="col-12 rounded bg-info text-center p-2">
-            {{ "05-12-2021 (Exemplo)" }}
+          <div class="col-12 rounded bg-info text-center p-2 mb-2">
+            <span class="px-0">{{ schedule["status"] }}</span>
           </div>
-        </div>
-
-        <div class="d-flex flex-wrap">
-          <span class="px-0">
-            Horario do último Agendamento
+          <span class="px-0 pb-1">
+            Data do ultimo Agendamento
           </span>
-          <div class="col-12 rounded bg-info text-center p-2">
-            {{ "18:25 (Exemplo)" }}
+          <div class="col-12 rounded bg-info text-center p-2 mb-2">
+            <span class="px-0">{{ schedule["date"] }}</span>
           </div>
-        </div>
-
-        <div class="d-flex flex-wrap pt-3">
-          <span class="px-0">
+          <span class="px-0 pb-1">
+            Hora do ultimo Agendamento
+          </span>
+          <div class="col-12 rounded bg-info text-center p-2 mb-2">
+            <span class="px-0">{{ schedule["hour"] }}</span>
+          </div>
+          <span class="px-0 pb-1">
             Observações
           </span>
-          <div class="col-12 rounded bg-info p-2">
-            {{ "Pintura de cabelo e cortar a franja. (Exemplo)" }}
+          <div class="col-12 rounded bg-info text-center p-2">
+            <span class="px-0">{{ schedule["note"] }}</span>
           </div>
+          {% endfor %}
         </div>
       </div>
       <div class="modal-footer">
@@ -41,9 +43,9 @@
               <img src="{{ url_for('static', filename='images/icons/back-arrow.svg') }}" class="icon-row"></i>
             </button>
           </div>
-          <form action="{{ url_for('views.schedule_cancel') }}" method="POST">
-            <input type="hidden" name="id" value="{{ '11' }}">
-            <button type="submit"  class="btn btn-danger btn-lg px-auto m-0">
+          <form action="{{url_for('views.schedule_cancel')}}" id="form-cancel{{context['user_id']}}" name="form-cancel{{context['user_id']}}" method="POST">
+            <input type="hidden" name="user_id" value="{{ context['user_id'] }}">
+            <button type="submit"  class="btn btn-danger btn-lg px-auto m-0" onclick="return pergunta();">
               <span class="text-light">Cancelar</span>
               <img src="{{ url_for('static', filename='images/icons/x-circle.svg') }}" class="icon-row"></i>
             </button>
@@ -53,3 +55,6 @@
     </div>
   </div>
 </div>
+{% block extra_scripts_bottom %}
+<script src="{{ url_for('static', filename='js/submit_confirm_cancel.js') }}"></script>
+{% endblock %}

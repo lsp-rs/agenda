@@ -11,7 +11,10 @@ from app.models import (
     UserStatus,
     db
 )
-from sqlalchemy import and_
+from sqlalchemy import (
+    and_,
+    desc
+)
 
 
 class UserHelper():
@@ -68,13 +71,16 @@ class UserHelper():
         date_and_time = datetime.combine(date_schedule, time_schedule)
         common_user_id = kwargs["common_user_id"]
         establishment_user_id = ""
+        created_by = ""
         if "establishment_user_id" in kwargs:
             establishment_user_id = kwargs["establishment_user_id"]
+            created_by = kwargs["establishment_user_id"]
         else:
             establishment_user = User.query.filter_by(
                 establishment_id=1
             ).first()
             establishment_user_id = establishment_user.id
+            created_by = kwargs["common_user_id"]
 
         scheduling_pending = Schedule.query.filter(
             and_(
@@ -127,9 +133,11 @@ class UserHelper():
             ):
                 new_schedule = Schedule(
                     date_and_time = date_and_time,
+                    note = kwargs["note"],
                     user_id = common_user_id,
                     user_establishment_id = establishment_user_id,
-                    note = kwargs["note"]
+                    created_by = created_by,
+                    created_at = datetime.now()
                 )
                 db.session.add(new_schedule)
                 db.session.commit()
@@ -147,6 +155,7 @@ class UserHelper():
                 User.id,
                 User.full_name,
                 Schedule.date_and_time,
+                Schedule.note,
                 Schedule.status
             ).outerjoin(
                 User,
@@ -159,15 +168,13 @@ class UserHelper():
                             "scheduled",
                         ]
                     ),
-                    Schedule.date_and_time > datetime.now()
+                    Schedule.date_and_time >= datetime.now()
                 )
             ).order_by(
-                Schedule.created_at
+                Schedule.date_and_time
             ).limit(
                 10
             ).all()
-
-            debug(f"E = {result_schedules}")
 
             for schedule in result_schedules:
                 schedule_data.append(
@@ -176,6 +183,7 @@ class UserHelper():
                         "full_name" : schedule.full_name,
                         "date" : schedule.date_and_time.strftime("%d/%m/%Y"),
                         "hour" : schedule.date_and_time.strftime("%H:%M:%S"),
+                        "note" : schedule.note,
                         "status" : self.STATUS[schedule.status.value],
                     }
                 )
@@ -191,7 +199,7 @@ class UserHelper():
             ).filter(
                 Schedule.user_id == kwargs["user_id"]
             ).order_by(
-                Schedule.created_at
+                desc(Schedule.created_at)
             ).first()
 
             if result_schedules:
@@ -224,15 +232,13 @@ class UserHelper():
                 and_(
                     Schedule.status.in_(
                         [
-                            "not_confirmed",
-                            "scheduled",
                             "concluded",
                             "unscheduled"
                         ]
                     )
                 )
             ).order_by(
-                Schedule.created_at
+                Schedule.date_and_time
             ).limit(
                 10
             ).all()
@@ -297,15 +303,13 @@ class UserHelper():
                 Schedule.created_at
             ).first()
 
-            debug(f"C = {result_schedules}")
-
             if result_schedules:
                 schedule_data.append(
                     {
-                        "user_id" : result_schedules.id,
+                        "status" : self.STATUS[result_schedules.status.value],
                         "date" : result_schedules.date_and_time.strftime("%d/%m/%Y"),
-                        "hora" : result_schedules.date_and_time.strftime("%H:%M:%S"),
-                        "nota" : result_schedules.note
+                        "hour" : result_schedules.date_and_time.strftime("%H:%M:%S"),
+                        "note" : result_schedules.note
                     }
                 )
 
@@ -326,11 +330,7 @@ class UserHelper():
             ).filter(
                 and_(
                     Schedule.user_establishment_id == kwargs["user_id"],
-                    Schedule.status.in_(
-                        [
-                            "not_confirmed",
-                        ]
-                    )
+                    Schedule.status == "not_confirmed",
                 )
             ).order_by(
                 Schedule.created_at
@@ -350,20 +350,17 @@ class UserHelper():
 
         else:
             result_schedules = Schedule.query.with_entities(
-                User.id,
                 Schedule.date_and_time,
                 Schedule.note,
+                Schedule.status
             ).outerjoin(
                 User,
                 User.id == Schedule.user_id
             ).filter(
                 and_(
                     Schedule.user_id == kwargs["user_id"],
-                    Schedule.status.in_(
-                        [
-                            "not_confirmed",
-                        ]
-                    )
+                    Schedule.created_by != kwargs["user_id"],
+                    Schedule.status == "not_confirmed"
                 )
             ).order_by(
                 Schedule.created_at
@@ -372,10 +369,10 @@ class UserHelper():
             if result_schedules:
                 schedule_data.append(
                     {
-                        "user_id" : result_schedules.id,
+                        "status" : self.STATUS[result_schedules.status.value],
                         "date" : result_schedules.date_and_time.strftime("%d/%m/%Y"),
-                        "hora" : result_schedules.date_and_time.strftime("%H:%M:%S"),
-                        "nota" : result_schedules.note
+                        "hour" : result_schedules.date_and_time.strftime("%H:%M:%S"),
+                        "note" : result_schedules.note
                     }
                 )
 
@@ -384,7 +381,6 @@ class UserHelper():
 
     def scheduling_confirmation(self, **kwargs):
         if "user_id" in kwargs:
-            debug(kwargs["user_id"])
             schedule = Schedule.query.filter(
                 and_(
                     Schedule.user_id == kwargs["user_id"],
@@ -399,7 +395,6 @@ class UserHelper():
 
     def scheduling_cancelation(self, **kwargs):
         if "user_id" in kwargs:
-            debug(kwargs["user_id"])
             schedule = Schedule.query.filter(
                 and_(
                     Schedule.user_id == kwargs["user_id"],

@@ -117,7 +117,7 @@ class ScheduleFormCommonUser(FlaskForm):
         ],
         format="%d/%m/%Y",
         render_kw={
-            "class":"form-control"
+            "class" : "form-control"
         }
     )
     time = TimeField(
@@ -165,7 +165,7 @@ class ScheduleFormeEstablishmentUser(FlaskForm):
         ],
         format="%d/%m/%Y",
         render_kw={
-            "class":"form-control"
+            "class" : "form-control"
         }
     )
     time = TimeField(

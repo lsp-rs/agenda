@@ -17,7 +17,7 @@
     <div class="col-3 p-1">
       <form action="{{ url_for('views.schedule_check') }}" class="p-0 m-0" method="POST">
         <input type="hidden" name="user_id" value="{{ schedules['user_id'] }}">
-        <button type="submit"  class="btn btn-success btn-sm">
+        <button type="submit"  class="btn btn-success btn-sm" onclick="return pergunta();">
           <img src="{{ url_for('static', filename='images/icons/check-circle.svg') }}" class="icon-row p-0 m-0">
         </button>
       </form>
@@ -33,3 +33,6 @@
   </div>
 </div>
 {% endif %}
+{% block extra_scripts_bottom %}
+<script src="{{ url_for('static', filename='js/submit_confirm_scheduling.js') }}"></script>
+{% endblock %}

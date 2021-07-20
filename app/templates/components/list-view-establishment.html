@@ -4,7 +4,7 @@
     Clientes Agendados
   </span>
   {% for schedules in context["view_schedule"] %}
-  <div class="col-12 d-flex flex-nowrap rounded bg-light text-center p-2 mb-1">
+  <div class="col-12 d-flex flex-wrap rounded bg-light text-center p-2 mb-1">
     <div class="col-4 p-1">
       <span>{{ schedules["full_name"] }}</span>
     </div>
@@ -15,6 +15,10 @@
     <div class="col-4 p-1">
       <span>{{ schedules["status"] }}</span>
     </div>
+    <div class="col-12 p-1 my-1 rounded bg-secondary">
+      <span>{{ schedules["note"] }}</span>
+    </div>
+    
   </div>
   {% endfor %}
 </div>
